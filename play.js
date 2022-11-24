@@ -10,10 +10,13 @@ const connect = function () {
   // interpret incoming data as text
   conn.setEncoding("utf8");
 
-  conn.on("connect", (connect) => {
-    console.log(`Server says: ${connect}`)
+  conn.on("connect", () => {
+    console.log(`Server says: Connected Successfully`)
   });
-  
+  conn.on("data", (data) => {
+    console.log(data.toString())
+    conn.end()
+  });
   return conn;
 };
 
