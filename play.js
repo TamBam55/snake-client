@@ -11,8 +11,17 @@ const connect = function () {
   conn.setEncoding("utf8");
 
   conn.on("connect", () => {
-    console.log(`Server says: Connected Successfully`)
+    console.log(`Server says: Connected Successfully`);
+    conn.write("Name: TLP");
   });
+
+  // conn.on("connect", () => {
+  //   conn.write("Move: up");
+  //   conn.write("Move: right")
+  //   conn.write("Move: down")
+  // });
+
+
   conn.on("data", (data) => {
     console.log(data.toString())
     conn.end()
