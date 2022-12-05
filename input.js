@@ -2,6 +2,10 @@
 
 let connection;
 
+const msg = "Say: ";
+const hello = "Hullo darknesssssss!";
+const stay = "Lemme ssssscootch by...";
+const listen = "Watch yourself!";
 
 const setupInput = function(conn) {
   connection = conn;
@@ -44,7 +48,15 @@ const handleUserInput = (key) => {
     clearInterval(func);
     interval(RIGHTKEY);
   }
- 
+  if (key === "e") {
+    connection.write(msg + hello);
+  }
+  if (key === "c") {
+    connection.write(msg + stay);
+  }
+  if (key === 'f') {
+    connection.write(msg + listen);
+  }
 };
 
 module.exports = { setupInput };
