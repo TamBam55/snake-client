@@ -1,24 +1,50 @@
-const { stdin } = require('process');
-const { connect } = require('./client');
-console.log('Connecting ...');
-connect();
 
-const setupInput = function() {
+
+let connection;
+
+
+const setupInput = function(conn) {
+  connection = conn;
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.setEncoding('utf8');
   stdin.resume();
-  return stdin;
-}
-
-const handleUserInput = function() {
-  stdin.on('data', (key) => {
-    if (key === '\u0003') {
-      process.exit();
-    }
+  stdin.on('data', key => {
+    handleUserInput(key);
   });
+  return stdin;
 };
 
-module.exports = {
-  setupInput
+let func;
+
+const handleUserInput = (key) => {
+  const stdout = process.stdout;
+  const interval = function(key) {
+    func = setInterval(() => {
+      connection.write(key);
+    }, 100);
+  };
+  if (key === '\u0003') {
+    stdout.write("Exited snek game. Bye bye.\n");
+    process.exit();
+  }
+  if (key === 'w') {
+    clearInterval(func);
+    interval(UPKEY);
+  }
+  if (key === 'a') {
+    clearInterval(func);
+    interval(LEFTKEY);
+  }
+  if (key === 's') {
+    clearInterval(func);
+    interval(DOWNKEY);
+  }
+  if (key === 'd') {
+    clearInterval(func);
+    interval(RIGHTKEY);
+  }
+ 
 };
+
+module.exports = { setupInput };
